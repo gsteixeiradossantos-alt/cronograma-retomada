@@ -3,167 +3,628 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cronograma de Retomada — Agosto 2026</title>
+<title>Retomada · Agosto 2026 — cobrasq.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter+Tight:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f3f4f2; --card:#ffffff; --ink:#191c1b; --sub:#686e6a;
-    --line:#dfe1dd; --accent:#3d6b63; --accent-ink:#22423b;
-    --accent-bg:#e6efec;
-    --warn-bg:#fdecea; --warn-ink:#8a2c1f; --warn-line:#f3c7bf;
-    --rhythm-bg:#fff8ea; --rhythm-line:#e8d6a0; --rhythm-ink:#6b5218;
-    --ok:#2f6d4f;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#14181a; --card:#1c2123; --ink:#e7ebe8; --sub:#98a19c;
-      --line:#2b3132; --accent:#7fbdae; --accent-ink:#bfe4d8;
-      --accent-bg:#1c2d29;
-      --warn-bg:#3a1f1a; --warn-ink:#f5b7a8; --warn-line:#5c2c22;
-      --rhythm-bg:#2b2411; --rhythm-line:#5c4a1f; --rhythm-ink:#e8cd8a;
-      --ok:#7fd1a6;
-    }
+    --ink:#0A1530; --graphite:#15224A; --accent:#C9A961; --accent-2:#9C7F40;
+    --paper:#EFEAD9; --paper-2:#E2DBC6;
+    --line-paper-14:rgba(10,21,48,.14); --line-paper-10:rgba(10,21,48,.10);
+    --line-paper-08:rgba(10,21,48,.08); --line-paper-06:rgba(10,21,48,.06);
+    --line-ink-16:rgba(239,234,217,.16); --line-ink-28:rgba(239,234,217,.28); --line-ink-30:rgba(239,234,217,.3);
+    --sub-on-paper:#5C6270; --sub-on-doc:#4A5069; --label-on-paper:#40465E;
+    --done-on-paper:rgba(10,21,48,.4); --done-on-ink:rgba(239,234,217,.4);
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --serif:'Fraunces', serif;
+    --script:'Instrument Serif', serif;
+    --sans:'Inter Tight', -apple-system, system-ui, sans-serif;
   }
   *{box-sizing:border-box;}
-  body{background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; margin:0; padding:0 0 50px;}
-  .wrap{max-width:700px; margin:0 auto; padding:18px 16px 40px;}
-  header.top{position:sticky; top:0; background:var(--bg); padding:14px 16px 10px; border-bottom:1px solid var(--line); z-index:10;}
-  header.top .inner{max-width:700px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  h1{font-size:1.2rem; margin:0; letter-spacing:-.01em; text-wrap:balance;}
-  .datebadge{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.72rem; color:var(--sub); letter-spacing:.02em; white-space:nowrap;}
+  html,body{margin:0; padding:0;}
+  body{background:var(--paper-2); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased;}
+  a{color:var(--accent-2); text-decoration:none;}
+  a:hover{color:var(--ink);}
+  button, input{font-family:inherit;}
+  button{border-radius:0;}
 
-  .ritmo{background:var(--rhythm-bg); border:1px solid var(--rhythm-line); border-radius:12px; margin:18px 0 24px; overflow:hidden;}
-  .ritmo-head{padding:12px 16px 4px; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--rhythm-ink);}
-  .ritmo-row{display:flex; gap:12px; padding:9px 16px; align-items:baseline; border-top:1px solid var(--rhythm-line);}
-  .ritmo-day{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.78rem; font-weight:700; color:var(--rhythm-ink); flex:none; width:78px;}
-  .ritmo-what{font-size:.9rem; line-height:1.4;}
+  /* ---- topbar ---- */
+  .topbar{position:sticky; top:0; z-index:20; background:rgba(226,219,198,.92); backdrop-filter:blur(14px); border-bottom:1px solid var(--line-paper-14);}
+  .topbar-inner{max-width:1120px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:14px; flex:1; min-width:250px;}
+  .brand-dot{width:9px; height:9px; border-radius:50%; background:var(--accent); flex:none;}
+  .wordmark{font-family:var(--serif); font-weight:300; font-size:1.45rem; letter-spacing:.02em; line-height:1;}
+  .wordmark .dot{color:var(--accent);}
+  .brand-div{width:1px; height:26px; background:rgba(10,21,48,.2); flex:none;}
+  .brand-label{font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--sub-on-doc);}
+  .topbar-right{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .progress-wrap{display:flex; align-items:center; gap:10px;}
+  .progress-track{width:120px; background:var(--line-paper-14); height:3px; overflow:hidden;}
+  .progress-fill{background:var(--accent); height:100%; transition:width .3s;}
+  .progress-counter{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--sub-on-doc); white-space:nowrap;}
+  .btn-print{background:var(--ink); color:var(--paper); border:1px solid var(--accent); padding:8px 15px; font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer; white-space:nowrap;}
+  .btn-print:hover{background:var(--graphite);}
 
-  section.bloco{margin-top:24px;}
-  .bloco-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px; cursor:pointer; padding:8px 0; border-bottom:2px solid var(--line);}
-  .bloco-head h2{font-size:.95rem; margin:0; display:flex; align-items:center; gap:8px;}
-  .bloco-time{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.72rem; color:var(--sub); font-weight:400; white-space:nowrap;}
-  .bloco-body{padding-top:4px;}
-  .caret{transition:transform .2s; font-size:.75rem; color:var(--sub);}
-  .bloco.collapsed .bloco-body{display:none;}
-  .bloco.collapsed .caret{transform:rotate(-90deg);}
+  /* ---- shell ---- */
+  .shell{max-width:1120px; margin:0 auto; padding:26px 24px 90px; display:grid; grid-template-columns:minmax(0,1fr) 304px; gap:26px; align-items:start;}
+  main{display:flex; flex-direction:column; gap:20px; min-width:0;}
+  aside{position:sticky; top:92px; display:flex; flex-direction:column; gap:18px;}
+  @media (max-width:900px){
+    .shell{grid-template-columns:1fr;}
+    aside{position:static;}
+  }
 
-  .item{display:flex; align-items:flex-start; gap:10px; padding:8px 4px; border-bottom:1px solid var(--line);}
-  .item:last-child{border-bottom:none;}
-  .item input[type=checkbox]{margin-top:3px; width:17px; height:17px; accent-color:var(--accent); flex:none; cursor:pointer;}
-  .item .action{font-size:.91rem; line-height:1.45; flex:1;}
-  .item.done .action{text-decoration:line-through; opacity:.5;}
+  /* ---- day panel (marinho) ---- */
+  .day-panel{background:var(--ink); color:var(--paper); padding:26px 28px; border-top:1px solid var(--accent);}
+  .day-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px;}
+  .day-head-left{display:flex; align-items:baseline; gap:14px;}
+  .day-tag{font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent);}
+  .day-date{font-family:var(--script); font-style:italic; font-size:1.6rem; line-height:1;}
+  .day-head-right{display:flex; align-items:center; gap:12px;}
+  .day-frac{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:rgba(239,234,217,.55);}
+  .day-nav{display:flex; gap:6px;}
+  .day-nav button{background:none; border:1px solid var(--line-ink-30); color:var(--paper); width:26px; height:26px; cursor:pointer; font-size:.8rem; line-height:1;}
+  .day-nav button:hover{border-color:var(--accent); color:var(--accent);}
+  .day-strip{display:flex; gap:6px; overflow-x:auto; padding-bottom:12px; margin-bottom:2px;}
+  .day-chip{flex:none; padding:5px 10px; font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; background:transparent; color:var(--paper); border:1px solid var(--line-ink-28);}
+  .day-chip.on{background:var(--accent); color:var(--ink); border-color:var(--accent); opacity:1; text-decoration:none;}
+  .day-chip.pend-off{opacity:.62; text-decoration:line-through;}
+  .day-tasks{display:flex; flex-direction:column;}
+  .task-row{display:flex; align-items:flex-start; gap:14px; padding:13px 0; border-top:1px solid var(--line-ink-16); cursor:pointer;}
+  .task-row input{margin-top:3px; width:17px; height:17px; accent-color:var(--accent); flex:none; cursor:pointer;}
+  .task-row .task-body{flex:1; min-width:0;}
+  .task-kind{display:inline-block; font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin-right:10px; white-space:nowrap; vertical-align:2px; color:rgba(239,234,217,.62);}
+  .task-kind.crit{color:var(--accent);}
+  .task-text{font-size:.95rem; line-height:1.5; color:var(--paper);}
+  .task-text.done{text-decoration:line-through; color:var(--done-on-ink);}
 
-  .today-card{background:var(--warn-bg); border:1px solid var(--warn-line); border-radius:10px; padding:12px 14px; margin-bottom:8px;}
-  .today-card .when{font-weight:700; color:var(--warn-ink); font-size:.9rem;}
-  .today-card .desc{font-size:.85rem; margin-top:4px; line-height:1.5;}
+  /* ---- papel cards ---- */
+  .card{background:var(--paper); border:1px solid var(--line-paper-14); padding:20px 24px 22px;}
+  .card-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:16px;}
+  .card-title{font-family:var(--serif); font-weight:400; font-size:1.5rem; margin:0; letter-spacing:-.02em;}
+  .chip-row{display:flex; gap:8px;}
+  .chip{background:transparent; color:var(--sub-on-paper); border:1px solid var(--line-paper-14); padding:6px 12px; font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer;}
+  .chip.on{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .chip:hover:not(.on){border-color:var(--accent-2); color:var(--ink);}
+  .backlog-controls{display:flex; align-items:center; gap:12px;}
+  .backlog-count{font-family:var(--mono); font-size:10px; letter-spacing:.14em; color:var(--sub-on-paper);}
 
-  .plan-card{background:var(--accent-bg); border:1px solid var(--line); border-radius:10px; padding:11px 14px; margin-bottom:10px; font-size:.87rem; line-height:1.55;}
-  .plan-card b{color:var(--accent-ink);}
+  .days-list{display:flex; flex-direction:column;}
+  .empty-state{font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--sub-on-doc); padding:18px 0; border-top:1px solid var(--line-paper-10);}
+  .day-row{display:flex; gap:16px; padding:6px 0; border-top:1px solid var(--line-paper-10);}
+  .day-row.all-done{opacity:.5;}
+  .day-col{width:100px; flex:none; padding-top:11px;}
+  .day-num{font-family:var(--serif); font-weight:400; font-size:1.1rem; line-height:1; letter-spacing:-.01em;}
+  .day-wd{font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--sub-on-paper); margin-top:5px;}
+  .day-row-tasks{flex:1; min-width:0; display:flex; flex-direction:column;}
+  .day-task-row{display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--line-paper-08); cursor:pointer;}
+  .day-task-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--accent-2); flex:none; cursor:pointer;}
+  .day-task-row .task-kind{color:var(--label-on-paper);}
+  .day-task-row .task-kind.crit{color:var(--ink);}
+  .day-task-row .task-text{font-size:.9rem; color:var(--ink);}
+  .day-task-row .task-text.done{color:var(--done-on-paper);}
 
-  .goal{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-top:28px;}
-  .goal h2{font-size:.85rem; margin:0 0 8px; text-transform:uppercase; letter-spacing:.05em; color:var(--sub);}
-  .goal ul{margin:0; padding-left:18px; font-size:.88rem; line-height:1.65;}
+  /* ---- backlog ---- */
+  .client-group{border-bottom:1px solid var(--line-paper-08);}
+  .client-head{display:flex; align-items:center; gap:12px; padding:12px 2px; cursor:pointer;}
+  .caret{font-size:9px; color:var(--accent-2); transition:transform .2s; flex:none;}
+  .caret.closed{transform:rotate(-90deg);}
+  .client-name{font-family:var(--serif); font-weight:400; font-size:1.02rem; letter-spacing:-.01em; flex:1; min-width:0;}
+  .overdue-badge{font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); background:rgba(201,169,97,.3); border:1px solid var(--accent); padding:3px 8px; white-space:nowrap;}
+  .client-frac{font-family:var(--mono); font-size:10px; color:var(--sub-on-paper); min-width:46px; text-align:right;}
+  .client-items{padding:0 0 10px 28px;}
+  .astrea-item{display:flex; align-items:flex-start; gap:11px; padding:8px 0; border-top:1px solid var(--line-paper-06); cursor:pointer;}
+  .astrea-item input{margin-top:2px; width:15px; height:15px; accent-color:var(--accent-2); flex:none; cursor:pointer;}
+  .astrea-item .task-body{flex:1; min-width:0;}
+  .astrea-num{font-family:var(--mono); font-size:9px; letter-spacing:.1em; color:var(--sub-on-paper); margin-right:8px;}
+  .astrea-body{font-size:.86rem; line-height:1.45; color:var(--ink);}
+  .astrea-body.done{text-decoration:line-through; color:var(--done-on-paper);}
+  .astrea-date{font-family:var(--mono); font-size:9px; letter-spacing:.1em; white-space:nowrap; margin-left:8px; padding:2px 7px; border:1px solid var(--line-paper-14); color:var(--sub-on-paper);}
+  .astrea-date.over{background:rgba(201,169,97,.28); border-color:var(--accent); color:var(--ink);}
 
-  .progress-outer{background:var(--line); border-radius:6px; height:6px; margin-top:8px; overflow:hidden;}
-  .progress-inner{background:var(--accent); height:100%; width:0%; transition:width .3s;}
-  .progress-label{font-size:.72rem; color:var(--sub); margin-top:4px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+  /* ---- aside ---- */
+  .aside-block{padding:18px 19px;}
+  .aside-block.ink{background:var(--ink); color:var(--paper); border-top:1px solid var(--accent);}
+  .aside-block.paper{background:var(--paper); border:1px solid var(--line-paper-14);}
+  .aside-block.graphite{background:var(--graphite); color:var(--paper);}
+  .aside-eyebrow{font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; margin-bottom:14px;}
+  .aside-eyebrow.on-ink{color:var(--accent);}
+  .aside-eyebrow.on-paper{color:var(--label-on-paper);}
+  .rotina-list{display:flex; flex-direction:column; gap:12px;}
+  .rotina-when{font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:rgba(239,234,217,.6); margin-bottom:3px;}
+  .rotina-what{font-size:.85rem; line-height:1.45; color:var(--paper);}
+  .audiencias-list{display:flex; flex-direction:column; gap:14px;}
+  .audiencia-row{display:flex; gap:12px;}
+  .audiencia-day{font-family:var(--mono); font-size:10px; letter-spacing:.1em; flex:none; padding:3px 8px; height:fit-content; border:1px solid var(--line-paper-14); color:var(--ink);}
+  .audiencia-day.today{background:rgba(201,169,97,.3); border-color:var(--accent);}
+  .audiencia-who{display:block; font-family:var(--serif); font-weight:400; font-size:.98rem; line-height:1.25;}
+  .audiencia-where{display:block; font-size:.79rem; color:var(--sub-on-paper); margin-top:3px; line-height:1.4;}
+  .fila-list{display:flex; flex-direction:column;}
+  .fila-row{display:flex; align-items:baseline; gap:10px; padding:7px 0; border-bottom:1px solid var(--line-paper-06);}
+  .fila-n{font-family:var(--mono); font-size:9px; color:var(--accent); width:14px; flex:none;}
+  .fila-name{flex:1; min-width:0; font-size:.82rem; line-height:1.35;}
+  .fila-casos{font-family:var(--mono); font-size:10px; color:var(--sub-on-paper); flex:none;}
+  .alarmes-list{display:flex; flex-direction:column; gap:10px;}
+  .alarme-item{font-size:.81rem; line-height:1.45; color:rgba(239,234,217,.86);}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--sub-on-paper);}
+  .btn-reset{background:none; border:1px solid var(--line-paper-14); color:var(--sub-on-paper); padding:6px 12px; font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer;}
+  .btn-reset:hover{border-color:var(--accent-2); color:var(--ink);}
+
+  /* ---- print ---- */
+  #printArea{display:none;}
+  @media print{
+    body *{visibility:hidden !important;}
+    #printArea, #printArea *{visibility:visible !important;}
+    #printArea{display:block !important; position:absolute; left:0; top:0; width:100%; color:#0A1530;}
+    .print-word{font-family:var(--serif); font-weight:300; font-size:22px;}
+    .print-head{font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; margin-top:4px;}
+    .print-meta{font-family:var(--mono); font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:#666; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid #C9A961;}
+    .print-row{display:flex; gap:8px; padding:6px 0; border-bottom:1px solid #e5e0d2; font-size:12px;}
+    .print-box{width:14px; flex:none;}
+    .print-kind{font-family:var(--mono); font-size:8px; letter-spacing:.16em; text-transform:uppercase; margin-right:8px;}
+  }
 </style>
 </head>
 <body>
 
-<header class="top">
-  <div class="inner">
-    <h1>Cronograma de Retomada</h1>
-    <span class="datebadge">05→31 AGO</span>
-  </div>
-  <div class="progress-label" id="counter">0/0 concluídos</div>
-  <div class="progress-outer"><div class="progress-inner" id="bar"></div></div>
-</header>
-
-<div class="wrap">
-
-  <div class="ritmo">
-    <div class="ritmo-head">Ritmo fixo — toda semana, sem exceção</div>
-    <div class="ritmo-row"><span class="ritmo-day">QUINTA</span><span class="ritmo-what">Cumprir os prazos pendentes da semana.</span></div>
-    <div class="ritmo-row"><span class="ritmo-day">SEXTA</span><span class="ritmo-what">Cadastrar acordos novos + lançar repasses aos clientes.</span></div>
-    <div class="ritmo-row"><span class="ritmo-day">1º da semana do mês</span><span class="ritmo-what">Verificar audiências marcadas em todos os tribunais (TJPR, EPROC TJSC, EPROC TJRS, TRT9).</span></div>
-  </div>
-
-  <section class="bloco" id="b0">
-    <div class="bloco-head" onclick="toggle('b0')"><h2><span class="caret">▾</span> Hoje</h2><span class="bloco-time">05/08</span></div>
-    <div class="bloco-body">
-      <div class="today-card">
-        <div class="when">16h30 — audiência virtual (MS Teams)</div>
-        <div class="desc">Elizangela de Ros × Ana Paula Krulikoski, JEC Palmas/PR, proc. 0005066-56-2023.8.16.0123. Chave PAE82 JX9AW QZHB9 UWY2Q. Preposto com carta de preposição — sem isso o feito é extinto.</div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span class="wordmark">cobrasq<span class="dot">.</span></span>
+      <span class="brand-div"></span>
+      <span class="brand-label">Retomada · Agosto 2026</span>
+    </div>
+    <div class="topbar-right">
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="progress-counter" id="progressCounter"></span>
       </div>
-      <div class="item"><input type="checkbox" data-id="0-1"><span class="action">Confirmar preposto escalado + carta em mãos.</span></div>
-      <div class="item"><input type="checkbox" data-id="0-2"><span class="action">Testar link e chave com 15 min de antecedência.</span></div>
-      <div class="item"><input type="checkbox" data-id="0-3"><span class="action">Comparecer às 16h30.</span></div>
+      <button class="btn-print" data-action="print-day">Imprimir o dia</button>
     </div>
-  </section>
-
-  <section class="bloco" id="b1">
-    <div class="bloco-head" onclick="toggle('b1')"><h2><span class="caret">▾</span> Esta semana</h2><span class="bloco-time">até 09/08</span></div>
-    <div class="bloco-body">
-      <div class="item"><input type="checkbox" data-id="1-1"><span class="action">Pagar Alessandro de Conti.</span></div>
-      <div class="item"><input type="checkbox" data-id="1-2"><span class="action">Listar as tarefas soltas do repo COBRASQ (hoje é só uma frase genérica).</span></div>
-      <div class="item"><input type="checkbox" data-id="1-3"><span class="action">Levantar processos ativos em EPROC TJSC, EPROC TJRS e TRT9 e rodar /analise-prazos-lote — hoje é o único ponto cego real, sem prazo mapeado.</span></div>
-      <div class="item"><input type="checkbox" data-id="1-4"><span class="action">Apontar as pastas dos casos soltos: Claudiomar Kubiak, Mercado Livre, Jubeli/consórcio Embracon, Aldiomiro Garboça, "mãe da Luana"/Geni, IRPF Carlinhos, Jaime (INSS).</span></div>
-    </div>
-  </section>
-
-  <section class="bloco" id="b2">
-    <div class="bloco-head" onclick="toggle('b2')"><h2><span class="caret">▾</span> Migração Astrea → COBRASQ</h2><span class="bloco-time">10→31/08</span></div>
-    <div class="bloco-body">
-      <div class="plan-card"><b>Plano:</b> Odontomundi primeiro (202 casos) — junto disso já entram os 90 contratos novos, resolve as duas pendências de uma vez. Depois, ordem por volume: Leofer → SOS Animal → casos próprios COBRASQ → Arte Estofados (Laranjeiras + Dois Vizinhos) → Saúde Farma, Vetclin, Injetcar, Machadinho, Ame Sorrisos → resto.</div>
-      <div class="item"><input type="checkbox" data-id="2-1"><span class="action">Odontomundi: importar (/importar-cobrasq) + anexar comprovantes + lançar pagamentos + etiquetar Astrea + conferir amostra de 5.</span></div>
-      <div class="item"><input type="checkbox" data-id="2-2"><span class="action">Odontomundi: cadastrar os 90 contratos novos, já com a rotina fresca.</span></div>
-      <div class="item"><input type="checkbox" data-id="2-3"><span class="action">Leofer Metalúrgica e Outras — mesmo processo.</span></div>
-      <div class="item"><input type="checkbox" data-id="2-4"><span class="action">SOS Animal — mesmo processo.</span></div>
-      <div class="item"><input type="checkbox" data-id="2-5"><span class="action">Casos próprios COBRASQ — mesmo processo.</span></div>
-      <div class="item"><input type="checkbox" data-id="2-6"><span class="action">Arte Estofados (Laranjeiras do Sul + Dois Vizinhos) — mesmo processo, os dois juntos.</span></div>
-      <div class="item"><input type="checkbox" data-id="2-7"><span class="action">Saúde Farma, Vetclin, Injetcar, Machadinho Auto Center, Ame Sorrisos — um de cada vez.</span></div>
-      <div class="item"><input type="checkbox" data-id="2-8"><span class="action">~110 clientes menores restantes — migrar em bloco.</span></div>
-    </div>
-  </section>
-
-  <section class="bloco collapsed" id="b3">
-    <div class="bloco-head" onclick="toggle('b3')"><h2><span class="caret">▾</span> Quando a agenda respirar</h2><span class="bloco-time">15→28/08</span></div>
-    <div class="bloco-body">
-      <div class="item"><input type="checkbox" data-id="3-1"><span class="action">WhatsApp represado: Elaine Baranoski, Mecânica Moreira, Marcielle Hauschilat, Dra. Ana, resto da fila — rascunho por conversa, nada enviado sem aprovação.</span></div>
-      <div class="item"><input type="checkbox" data-id="3-2"><span class="action">Sistema financeiro do repo: listar requisitos antes de codificar.</span></div>
-      <div class="item"><input type="checkbox" data-id="3-3"><span class="action">Finanças pessoais + empréstimo: sessão protegida, dados reais em mãos.</span></div>
-    </div>
-  </section>
-
-  <div class="goal">
-    <h2>Checkpoint — 04/09</h2>
-    <ul>
-      <li>Nenhum prazo TJPR/EPROC/TRT9 sem mapeamento.</li>
-      <li>Pelo menos 4 clientes migrados (Odontomundi, Leofer, SOS Animal, casos próprios).</li>
-      <li>Quinta e sexta rodando sem falha há 4 semanas seguidas.</li>
-    </ul>
   </div>
-
 </div>
 
-<script>
-  function toggle(id){ document.getElementById(id).classList.toggle('collapsed'); }
-  function updateProgress(){
-    var boxes = document.querySelectorAll('.item input[type=checkbox]');
-    var done = 0;
-    boxes.forEach(function(cb){ if(cb.checked) done++; cb.closest('.item').classList.toggle('done', cb.checked); });
-    document.getElementById('counter').textContent = done + '/' + boxes.length + ' concluídos';
-    document.getElementById('bar').style.width = (boxes.length ? (done/boxes.length*100) : 0) + '%';
-  }
-  document.querySelectorAll('.item input[type=checkbox]').forEach(function(cb){
-    var saved = localStorage.getItem('cronograma-' + cb.dataset.id);
-    if(saved === '1'){ cb.checked = true; }
-    cb.addEventListener('change', function(){
-      localStorage.setItem('cronograma-' + cb.dataset.id, cb.checked ? '1' : '0');
-      updateProgress();
+<div class="shell">
+  <main>
+    <section class="day-panel" id="dayPanel"></section>
+    <section class="card" id="upcomingCard"></section>
+    <section class="card" id="backlogCard"></section>
+  </main>
+  <aside id="asideCol"></aside>
+</div>
+
+<div id="printArea"></div>
+
+<script type="module">
+import { DATA } from './cronograma-data.js';
+
+const KEY = 'cronograma-agosto-2026-agenda';
+const LEGACY_KEY = 'cronograma-agosto-2026-gustavo';
+const HOJE = '2026-08-05';
+
+const PRAZOS = 'Cumprir prazos pendentes da semana';
+const ACORDOS = 'Cadastrar acordos novos + enviar repasses aos clientes';
+
+const PLANO = [
+  ['2026-08-05', 'qua', [
+    ['Audiência', '16h30 · Elizangela de Ros × Ana Paula Krulikoski — MS Teams, preposto com carta'],
+    ['Pagar', 'Alessandro de Conti']
+  ]],
+  ['2026-08-06', 'qui', [
+    ['Prazos', PRAZOS],
+    ['Prazos', 'Levantar processos ativos em EPROC TJSC, EPROC TJRS e TRT9 e rodar /analise-prazos-lote']
+  ]],
+  ['2026-08-07', 'sex', [
+    ['Semanal', ACORDOS],
+    ['Astrea', 'Triar vencidos A1–A8']
+  ]],
+  ['2026-08-10', 'seg', [
+    ['Migrar', 'Odontomundi — importar os 202 casos ativos no COBRASQ'],
+    ['Astrea', 'Triar vencidos A9–A16']
+  ]],
+  ['2026-08-11', 'ter', [
+    ['Migrar', 'Odontomundi — anexar comprovantes e lançar pagamentos'],
+    ['Astrea', 'Triar vencidos A17–A24']
+  ]],
+  ['2026-08-12', 'qua', [
+    ['Migrar', 'Odontomundi — etiquetar no Astrea e conferir 5 casos por amostra'],
+    ['Cadastrar', '90 contratos novos da Odontomundi']
+  ]],
+  ['2026-08-13', 'qui', [
+    ['Prazos', PRAZOS],
+    ['Astrea', 'Triar vencidos A25–A32']
+  ]],
+  ['2026-08-14', 'sex', [
+    ['Semanal', ACORDOS],
+    ['Financeiro', 'Sessão de 30 min: requisitos do sistema financeiro do COBRASQ']
+  ]],
+  ['2026-08-17', 'seg', [
+    ['Audiência', 'Proc. 0006715-57 — Juliana Skorek Bruch e Nilsa Celi Zeni'],
+    ['Migrar', 'Leofer Metalúrgica — importar os 106 casos']
+  ]],
+  ['2026-08-18', 'ter', [
+    ['Migrar', 'Leofer — comprovantes, pagamentos, etiquetas e amostra'],
+    ['Astrea', 'Triar vencidos A33–A40']
+  ]],
+  ['2026-08-19', 'qua', [
+    ['Migrar', 'SOS Animal — 93 casos, ciclo completo'],
+    ['Astrea', 'Triar vencidos A41–A48']
+  ]],
+  ['2026-08-20', 'qui', [
+    ['Audiência', 'Proc. 0006255-36 — Jean Carlos Vialeto'],
+    ['Prazos', PRAZOS]
+  ]],
+  ['2026-08-21', 'sex', [
+    ['Semanal', ACORDOS],
+    ['Pastas', 'Apontar pastas: Claudiomar Kubiak, Mercado Livre, Jaime (INSS), IRPF Carlinhos']
+  ]],
+  ['2026-08-24', 'seg', [
+    ['Migrar', 'COBRASQ casos próprios — 57 casos'],
+    ['Astrea', 'Triar vencidos A49–A56']
+  ]],
+  ['2026-08-25', 'ter', [
+    ['Migrar', 'Arte Estofados — Laranjeiras do Sul + Dois Vizinhos, 97 casos em bloco'],
+    ['Astrea', 'Triar vencidos A57–A64']
+  ]],
+  ['2026-08-26', 'qua', [
+    ['WhatsApp', 'Triar: Elaine Baranoski, Mecânica Moreira, Marcielle Hauschilat, Dra. Ana'],
+    ['Astrea', 'Triar vencidos A65–A68 — fecha os 68 vencidos']
+  ]],
+  ['2026-08-27', 'qui', [
+    ['Prazos', PRAZOS],
+    ['Audiência', 'TRT9 — Edina Regina: confirmar data e preposto']
+  ]],
+  ['2026-08-28', 'sex', [
+    ['Semanal', ACORDOS],
+    ['Migrar', 'Saúde Farma, Vetclin e Injetcar — 67 casos']
+  ]],
+  ['2026-08-31', 'seg', [
+    ['Migrar', 'Machadinho Auto Center + Ame Sorrisos — 41 casos'],
+    ['Fechar mês', 'O que sobrou entra no cronograma de setembro']
+  ]],
+  ['2026-09-01', 'ter', [
+    ['Início do mês', 'Verificar audiências designadas em todos os tribunais (PROJUDI, EPROC TJSC/TJRS, TRT9)'],
+    ['Semanal', 'Retomar o ritmo: quinta prazos, sexta acordos e repasses']
+  ]]
+];
+
+const ROTINA = [
+  { when:'Quinta', what:'Cumprir os prazos pendentes da semana' },
+  { when:'Sexta', what:'Cadastrar acordos novos e enviar o dinheiro dos clientes' },
+  { when:'Dia 1 do mês', what:'Verificar as audiências designadas nos tribunais' }
+];
+const AUDIENCIAS = [
+  { day:'05/08', who:'Elizangela de Ros × Ana Paula Krulikoski', where:'16h30 · JEC Palmas/PR — MS Teams, chave PAE82 JX9AW QZHB9 UWY2Q', hoje:true },
+  { day:'17/08', who:'Juliana Skorek Bruch e Nilsa Celi Zeni', where:'Proc. 0006715-57' },
+  { day:'20/08', who:'Jean Carlos Vialeto', where:'Proc. 0006255-36' },
+  { day:'27/08', who:'Edina Regina', where:'TRT9 — confirmar data e preposto' }
+];
+const FILA = [
+  { n:'1', name:'Odontomundi + 90 contratos novos', casos:'202' },
+  { n:'2', name:'Leofer Metalúrgica e Outras', casos:'106' },
+  { n:'3', name:'SOS Animal', casos:'93' },
+  { n:'4', name:'COBRASQ casos próprios', casos:'57' },
+  { n:'5', name:'Arte Estofados (LS + DV)', casos:'97' },
+  { n:'6', name:'Saúde Farma · Vetclin · Injetcar', casos:'67' },
+  { n:'7', name:'Machadinho · Ame Sorrisos', casos:'41' },
+  { n:'8', name:'~110 clientes pequenos, em lote', casos:'414' }
+];
+const ALARMES = [
+  { text:'Réu não citado a menos de 5 dias úteis da audiência → pedir redesignação no mesmo dia.' },
+  { text:'Prazo do EPROC/TRT9 vencendo em ≤10 dias → para a migração e resolve o prazo.' },
+  { text:'Saldo do cliente não bate entre Astrea e COBRASQ → para a importação e confere à mão.' }
+];
+const CRITICO = ['Audiência', 'Prazos', 'Fechar mês', 'Início do mês'];
+const MES = { '08':'agosto', '09':'setembro' };
+const WD = { seg:'segunda', ter:'terça', qua:'quarta', qui:'quinta', sex:'sexta' };
+const fmt = iso => Number(iso.slice(8)) + ' de ' + MES[iso.slice(5,7)];
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ---- state ----
+let checked = {}, astrea = {}, openClients = {}, scope = 'semana', onlyOverdue = false, sel = HOJE;
+try { checked = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
+try { astrea = JSON.parse(localStorage.getItem(LEGACY_KEY) || '{}'); } catch(e){}
+
+function save(k, obj){ try { localStorage.setItem(k, JSON.stringify(obj)); } catch(e){} }
+
+// ---- derive astrea backlog from cronograma-data.js (same parsing as the reference design) ----
+function astreaItems(){
+  const p = DATA.phases.find(x => x.id === 'fase8');
+  const out = [];
+  p.blocks.forEach(b => {
+    if (b.t !== 'item') return;
+    const segs = (b.segs || []).filter(g => !g.br);
+    let client = '', body = '', dateRaw = '';
+    segs.forEach((g, i) => {
+      const t = (g.s || '').trim();
+      if (i === 0 && g.b && !g.i && t.length < 70) { client = t; return; }
+      const dm = t.match(/^\[(?:venc\.\s*)?(\d{2}\/\d{2}\/\d{4})/);
+      if (g.i && dm) { dateRaw = dm[1]; return; }
+      if (g.w || g.m) return;
+      body += (body ? ' ' : '') + t;
     });
+    body = body.replace(/^—\s*/, '').replace(/\s+—\s*$/, '');
+    let days = null;
+    if (dateRaw) {
+      const [dd, mm, yy] = dateRaw.split('/').map(Number);
+      days = Math.round((new Date(yy, mm - 1, dd) - new Date(2026, 7, 5)) / 86400000);
+    }
+    out.push({ id:b.id, num:b.num, client: client || 'Sem cliente vinculado', body, dateRaw, days });
   });
-  updateProgress();
+  return out;
+}
+const ASTREA_ITEMS = astreaItems();
+
+// ---- render helpers ----
+function taskRowHtml(dayId, tasks, dark, i0){
+  return tasks.map((t, i) => {
+    const id = dayId + '-' + i;
+    const ck = !!checked[id];
+    const crit = CRITICO.includes(t[0]);
+    const kindCls = dark ? 'task-kind' : 'task-kind';
+    const rowCls = dark ? 'task-row' : 'day-task-row';
+    const textCls = dark ? 'task-text' : 'task-text';
+    return `<label class="${rowCls}" data-toggle-task="${id}">
+      <input type="checkbox" ${ck ? 'checked' : ''} data-toggle-task="${id}">
+      <span class="task-body">
+        <span class="task-kind${crit ? ' crit' : ''}">${esc(t[0])}</span>
+        <span class="${textCls}${ck ? ' done' : ''}">${esc(t[1])}</span>
+      </span>
+    </label>`;
+  }).join('');
+}
+
+function renderDayPanel(){
+  const idx = PLANO.findIndex(d => d[0] === sel);
+  const si = idx < 0 ? 0 : idx;
+  const today = PLANO[si];
+  const tomorrowIdx = PLANO.findIndex(d => d[0] === HOJE) + 1;
+  const tomorrow = PLANO[tomorrowIdx];
+  const selTag = today[0] === HOJE ? 'Hoje' : (tomorrow && today[0] === tomorrow[0] ? 'Amanhã' : 'Dia selecionado');
+  const hojeTasks = today[2].map((t, i) => ({ t, id: today[0] + '-' + i, checked: !!checked[today[0] + '-' + i] }));
+  const doneHoje = hojeTasks.filter(x => x.checked).length;
+
+  const stripHtml = PLANO.map(d => {
+    const on = d[0] === sel;
+    const pend = d[2].some((t, i) => !checked[d[0] + '-' + i]);
+    const label = d[0].slice(8) + ' ' + (d[0].slice(5,7) === '08' ? 'ago' : 'set') + ' · ' + d[1];
+    const cls = ['day-chip', on ? 'on' : '', (!on && !pend) ? 'pend-off' : ''].filter(Boolean).join(' ');
+    return `<button class="${cls}" data-pick-day="${d[0]}">${esc(label)}</button>`;
+  }).join('');
+
+  document.getElementById('dayPanel').innerHTML = `
+    <div class="day-head">
+      <div class="day-head-left">
+        <span class="day-tag">${esc(selTag)}</span>
+        <span class="day-date">${esc(WD[today[1]] || today[1])}, ${esc(fmt(today[0]))}</span>
+      </div>
+      <div class="day-head-right">
+        <span class="day-frac">${doneHoje}/${hojeTasks.length} feitos</span>
+        <div class="day-nav">
+          <button data-action="prev-day" title="Dia anterior">‹</button>
+          <button data-action="next-day" title="Próximo dia">›</button>
+        </div>
+      </div>
+    </div>
+    <div class="day-strip">${stripHtml}</div>
+    <div class="day-tasks">${taskRowHtml(today[0], today[2], true)}</div>
+  `;
+}
+
+function renderUpcoming(){
+  const upcoming = PLANO.filter(d => d[0] > HOJE);
+  const shown = scope === 'semana' ? upcoming.filter(d => d[0] <= '2026-08-09')
+    : (scope === 'prox' ? upcoming.filter(d => d[0] >= '2026-08-10' && d[0] <= '2026-08-16')
+    : upcoming);
+
+  const scopesHtml = [['semana','Esta semana'], ['prox','Semana que vem'], ['mes','Até 01/09']].map(([k, label]) =>
+    `<button class="chip${scope === k ? ' on' : ''}" data-pick-scope="${k}">${label}</button>`
+  ).join('');
+
+  const daysHtml = shown.length === 0
+    ? `<div class="empty-state">Nenhum dia neste recorte</div>`
+    : shown.map(d => {
+        const tasks = d[2].map((t, i) => ({ t, checked: !!checked[d[0] + '-' + i] }));
+        const allDone = tasks.every(t => t.checked);
+        const dayLabel = d[0].slice(8) + ' ' + (d[0].slice(5,7) === '08' ? 'ago' : 'set');
+        return `<div class="day-row${allDone ? ' all-done' : ''}">
+          <div class="day-col">
+            <div class="day-num">${esc(dayLabel)}</div>
+            <div class="day-wd">${esc(d[1])}</div>
+          </div>
+          <div class="day-row-tasks">${taskRowHtml(d[0], d[2], false)}</div>
+        </div>`;
+      }).join('');
+
+  document.getElementById('upcomingCard').innerHTML = `
+    <div class="card-head">
+      <h2 class="card-title">Os próximos dias</h2>
+      <div class="chip-row">${scopesHtml}</div>
+    </div>
+    <div class="days-list">${daysHtml}</div>
+  `;
+}
+
+function renderBacklog(){
+  const visible = onlyOverdue ? ASTREA_ITEMS.filter(i => i.days !== null && i.days < 0) : ASTREA_ITEMS;
+  const byClient = {};
+  visible.forEach(i => { (byClient[i.client] = byClient[i.client] || []).push(i); });
+  const clientNames = Object.keys(byClient).sort((a, b) => byClient[b].length - byClient[a].length);
+  const astreaDone = ASTREA_ITEMS.filter(i => astrea[i.id]).length;
+
+  const clientsHtml = clientNames.map(name => {
+    const list = byClient[name];
+    const open = !!openClients[name];
+    const dn = list.filter(i => astrea[i.id]).length;
+    const overdue = list.filter(i => i.days !== null && i.days < 0 && !astrea[i.id]).length;
+    const overdueLabel = overdue ? (overdue === 1 ? '1 vencido' : overdue + ' vencidos') : '';
+    const itemsHtml = list.map(i => {
+      const ck = !!astrea[i.id];
+      const over = i.days !== null && i.days < 0;
+      const dateLabel = i.dateRaw ? (over ? i.dateRaw + ' · vencido há ' + Math.abs(i.days) + 'd' : i.dateRaw) : '';
+      return `<label class="astrea-item" data-toggle-astrea="${i.id}">
+        <input type="checkbox" ${ck ? 'checked' : ''} data-toggle-astrea="${i.id}">
+        <span class="task-body">
+          <span class="astrea-num">${esc(i.num)}</span>
+          <span class="astrea-body${ck ? ' done' : ''}">${esc(i.body)}</span>
+          ${dateLabel ? `<span class="astrea-date${over ? ' over' : ''}">${esc(dateLabel)}</span>` : ''}
+        </span>
+      </label>`;
+    }).join('');
+    return `<div class="client-group">
+      <div class="client-head" data-toggle-client="${esc(name)}">
+        <span class="caret${open ? '' : ' closed'}">▾</span>
+        <span class="client-name">${esc(name)}</span>
+        ${overdueLabel ? `<span class="overdue-badge">${overdueLabel}</span>` : ''}
+        <span class="client-frac">${dn}/${list.length}</span>
+      </div>
+      ${open ? `<div class="client-items">${itemsHtml}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  document.getElementById('backlogCard').innerHTML = `
+    <div class="card-head">
+      <h2 class="card-title">Backlog do Astrea</h2>
+      <div class="backlog-controls">
+        <button class="chip${onlyOverdue ? ' on' : ''}" data-action="toggle-vencidos">Só vencidos</button>
+        <span class="backlog-count">${astreaDone}/${ASTREA_ITEMS.length}</span>
+      </div>
+    </div>
+    <div class="clients-list">${clientsHtml}</div>
+  `;
+}
+
+function renderAside(){
+  const rotinaHtml = ROTINA.map(r => `<div><div class="rotina-when">${esc(r.when)}</div><div class="rotina-what">${esc(r.what)}</div></div>`).join('');
+  const audHtml = AUDIENCIAS.map(a => `<div class="audiencia-row">
+    <span class="audiencia-day${a.hoje ? ' today' : ''}">${esc(a.day)}</span>
+    <span class="task-body">
+      <span class="audiencia-who">${esc(a.who)}</span>
+      <span class="audiencia-where">${esc(a.where)}</span>
+    </span>
+  </div>`).join('');
+  const filaHtml = FILA.map(f => `<div class="fila-row">
+    <span class="fila-n">${esc(f.n)}</span>
+    <span class="fila-name">${esc(f.name)}</span>
+    <span class="fila-casos">${esc(f.casos)}</span>
+  </div>`).join('');
+  const alarmesHtml = ALARMES.map(a => `<div class="alarme-item">${esc(a.text)}</div>`).join('');
+
+  document.getElementById('asideCol').innerHTML = `
+    <div class="aside-block ink">
+      <div class="aside-eyebrow on-ink">Ritmo fixo da semana</div>
+      <div class="rotina-list">${rotinaHtml}</div>
+    </div>
+    <div class="aside-block paper">
+      <div class="aside-eyebrow on-paper">Audiências de agosto</div>
+      <div class="audiencias-list">${audHtml}</div>
+    </div>
+    <div class="aside-block paper">
+      <div class="aside-eyebrow on-paper">Fila de migração</div>
+      <div class="fila-list">${filaHtml}</div>
+    </div>
+    <div class="aside-block graphite">
+      <div class="aside-eyebrow on-ink">Sai do roteiro se</div>
+      <div class="alarmes-list">${alarmesHtml}</div>
+    </div>
+    <div class="footer-row">
+      <span>cobrasq.com.br</span>
+      <button class="btn-reset" data-action="reset">Resetar</button>
+    </div>
+  `;
+}
+
+function renderTopbar(){
+  const allTasks = [];
+  PLANO.forEach(d => d[2].forEach((t, i) => allTasks.push(d[0] + '-' + i)));
+  const done = allTasks.filter(id => checked[id]).length;
+  document.getElementById('progressFill').style.width = (allTasks.length ? done / allTasks.length * 100 : 0) + '%';
+  document.getElementById('progressCounter').textContent = done + ' / ' + allTasks.length + ' do plano';
+}
+
+function render(){
+  renderTopbar();
+  renderDayPanel();
+  renderUpcoming();
+  renderBacklog();
+  renderAside();
+}
+
+// ---- actions ----
+function toggleTask(id){
+  checked = { ...checked, [id]: !checked[id] };
+  save(KEY, checked);
+  render();
+}
+function toggleAstrea(id){
+  astrea = { ...astrea, [id]: !astrea[id] };
+  save(LEGACY_KEY, astrea);
+  render();
+}
+function pickDay(iso){ sel = iso; render(); }
+function stepDay(delta){
+  const idx = PLANO.findIndex(d => d[0] === sel);
+  const si = idx < 0 ? 0 : idx;
+  const next = Math.max(0, Math.min(PLANO.length - 1, si + delta));
+  sel = PLANO[next][0];
+  render();
+}
+function pickScope(k){ scope = k; render(); }
+function toggleVencidos(){ onlyOverdue = !onlyOverdue; render(); }
+function toggleClient(name){ openClients = { ...openClients, [name]: !openClients[name] }; render(); }
+function doReset(){
+  if (confirm('Resetar o plano de 30 dias?')) {
+    checked = {};
+    localStorage.removeItem(KEY);
+    render();
+  }
+}
+function printDay(){
+  const idx = PLANO.findIndex(d => d[0] === sel);
+  const si = idx < 0 ? 0 : idx;
+  const today = PLANO[si];
+  const label = (WD[today[1]] || today[1]) + ', ' + today[0].slice(8) + '/' + today[0].slice(5,7) + '/2026';
+  const rows = today[2].map((t, i) => ({ kind:t[0], text:t[1], checked: !!checked[today[0] + '-' + i] }));
+  const rowsHtml = rows.map(r => `<div class="print-row">
+    <span class="print-box">${r.checked ? '☑' : '☐'}</span>
+    <span><span class="print-kind">${esc(r.kind)}</span>${esc(r.text)}</span>
+  </div>`).join('');
+  document.getElementById('printArea').innerHTML = `
+    <div class="print-word">cobrasq.</div>
+    <div class="print-head">Retomada · ${esc(label)}</div>
+    <div class="print-meta">Gerado em ${esc(new Date().toLocaleString('pt-BR'))}</div>
+    ${rowsHtml}
+  `;
+  setTimeout(() => window.print(), 120);
+}
+
+// ---- event delegation ----
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-action], [data-pick-day], [data-pick-scope], [data-toggle-client]');
+  if (!btn) return;
+  if (btn.dataset.action === 'prev-day') stepDay(-1);
+  else if (btn.dataset.action === 'next-day') stepDay(1);
+  else if (btn.dataset.action === 'toggle-vencidos') toggleVencidos();
+  else if (btn.dataset.action === 'reset') doReset();
+  else if (btn.dataset.action === 'print-day') printDay();
+  else if (btn.dataset.pickDay) pickDay(btn.dataset.pickDay);
+  else if (btn.dataset.pickScope) pickScope(btn.dataset.pickScope);
+  else if (btn.dataset.toggleClient) toggleClient(btn.dataset.toggleClient);
+});
+document.addEventListener('change', e => {
+  const input = e.target;
+  if (input.dataset && input.dataset.toggleTask) toggleTask(input.dataset.toggleTask);
+  else if (input.dataset && input.dataset.toggleAstrea) toggleAstrea(input.dataset.toggleAstrea);
+});
+// checkbox click bubbles to label click too; guard against double toggle by only reacting on the input's change event,
+// and preventing the wrapping label's default double-fire via the input itself (browser handles label->input click natively).
+
+render();
 </script>
 </body>
 </html>
