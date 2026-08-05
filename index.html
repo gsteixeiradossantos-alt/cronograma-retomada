@@ -26,7 +26,7 @@
   body{background:var(--paper-2); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased;}
   a{color:var(--accent-2); text-decoration:none;}
   a:hover{color:var(--ink);}
-  button, input{font-family:inherit;}
+  button, input, select, textarea{font-family:inherit;}
   button{border-radius:0;}
 
   /* ---- topbar ---- */
@@ -38,13 +38,16 @@
   .wordmark .dot{color:var(--accent);}
   .brand-div{width:1px; height:26px; background:rgba(10,21,48,.2); flex:none;}
   .brand-label{font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--sub-on-doc);}
-  .topbar-right{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .topbar-right{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
   .progress-wrap{display:flex; align-items:center; gap:10px;}
   .progress-track{width:120px; background:var(--line-paper-14); height:3px; overflow:hidden;}
   .progress-fill{background:var(--accent); height:100%; transition:width .3s;}
   .progress-counter{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--sub-on-doc); white-space:nowrap;}
-  .btn-print{background:var(--ink); color:var(--paper); border:1px solid var(--accent); padding:8px 15px; font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer; white-space:nowrap;}
+  .btn-print, .btn-add{padding:8px 15px; font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer; white-space:nowrap;}
+  .btn-print{background:var(--ink); color:var(--paper); border:1px solid var(--accent);}
   .btn-print:hover{background:var(--graphite);}
+  .btn-add{background:transparent; color:var(--ink); border:1px solid var(--ink);}
+  .btn-add:hover{background:var(--ink); color:var(--paper);}
 
   /* ---- shell ---- */
   .shell{max-width:1120px; margin:0 auto; padding:26px 24px 90px; display:grid; grid-template-columns:minmax(0,1fr) 304px; gap:26px; align-items:start;}
@@ -71,13 +74,16 @@
   .day-chip.on{background:var(--accent); color:var(--ink); border-color:var(--accent); opacity:1; text-decoration:none;}
   .day-chip.pend-off{opacity:.62; text-decoration:line-through;}
   .day-tasks{display:flex; flex-direction:column;}
-  .task-row{display:flex; align-items:flex-start; gap:14px; padding:13px 0; border-top:1px solid var(--line-ink-16); cursor:pointer;}
+  .task-row{display:flex; align-items:flex-start; gap:8px; padding:13px 0; border-top:1px solid var(--line-ink-16);}
+  .task-row label{display:flex; align-items:flex-start; gap:14px; flex:1; min-width:0; cursor:pointer;}
   .task-row input{margin-top:3px; width:17px; height:17px; accent-color:var(--accent); flex:none; cursor:pointer;}
-  .task-row .task-body{flex:1; min-width:0;}
+  .task-body{flex:1; min-width:0;}
   .task-kind{display:inline-block; font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin-right:10px; white-space:nowrap; vertical-align:2px; color:rgba(239,234,217,.62);}
   .task-kind.crit{color:var(--accent);}
   .task-text{font-size:.95rem; line-height:1.5; color:var(--paper);}
   .task-text.done{text-decoration:line-through; color:var(--done-on-ink);}
+  .task-del{background:none; border:none; color:rgba(239,234,217,.35); font-size:1.05rem; line-height:1; cursor:pointer; padding:2px 6px; flex:none; margin-top:2px;}
+  .task-del:hover{color:var(--accent);}
 
   /* ---- papel cards ---- */
   .card{background:var(--paper); border:1px solid var(--line-paper-14); padding:20px 24px 22px;}
@@ -98,12 +104,15 @@
   .day-num{font-family:var(--serif); font-weight:400; font-size:1.1rem; line-height:1; letter-spacing:-.01em;}
   .day-wd{font-family:var(--mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--sub-on-paper); margin-top:5px;}
   .day-row-tasks{flex:1; min-width:0; display:flex; flex-direction:column;}
-  .day-task-row{display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--line-paper-08); cursor:pointer;}
+  .day-task-row{display:flex; align-items:flex-start; gap:8px; padding:10px 0; border-bottom:1px solid var(--line-paper-08);}
+  .day-task-row label{display:flex; align-items:flex-start; gap:12px; flex:1; min-width:0; cursor:pointer;}
   .day-task-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--accent-2); flex:none; cursor:pointer;}
   .day-task-row .task-kind{color:var(--label-on-paper);}
   .day-task-row .task-kind.crit{color:var(--ink);}
   .day-task-row .task-text{font-size:.9rem; color:var(--ink);}
   .day-task-row .task-text.done{color:var(--done-on-paper);}
+  .day-task-row .task-del{color:var(--sub-on-paper);}
+  .day-task-row .task-del:hover{color:var(--ink);}
 
   /* ---- backlog ---- */
   .client-group{border-bottom:1px solid var(--line-paper-08);}
@@ -116,7 +125,6 @@
   .client-items{padding:0 0 10px 28px;}
   .astrea-item{display:flex; align-items:flex-start; gap:11px; padding:8px 0; border-top:1px solid var(--line-paper-06); cursor:pointer;}
   .astrea-item input{margin-top:2px; width:15px; height:15px; accent-color:var(--accent-2); flex:none; cursor:pointer;}
-  .astrea-item .task-body{flex:1; min-width:0;}
   .astrea-num{font-family:var(--mono); font-size:9px; letter-spacing:.1em; color:var(--sub-on-paper); margin-right:8px;}
   .astrea-body{font-size:.86rem; line-height:1.45; color:var(--ink);}
   .astrea-body.done{text-decoration:line-through; color:var(--done-on-paper);}
@@ -151,6 +159,21 @@
   .btn-reset{background:none; border:1px solid var(--line-paper-14); color:var(--sub-on-paper); padding:6px 12px; font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer;}
   .btn-reset:hover{border-color:var(--accent-2); color:var(--ink);}
 
+  /* ---- modal (nova pendência) ---- */
+  .modal-overlay{position:fixed; inset:0; background:rgba(10,21,48,.5); display:none; align-items:flex-start; justify-content:center; padding:10vh 20px; z-index:100;}
+  .modal-overlay.open{display:flex;}
+  .modal-panel{background:var(--paper); border:1px solid var(--line-paper-14); border-top:2px solid var(--accent); padding:24px 26px 22px; max-width:420px; width:100%;}
+  .modal-title{font-family:var(--serif); font-weight:400; font-size:1.3rem; margin:0 0 18px; letter-spacing:-.01em;}
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
+  .field label{font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--label-on-paper);}
+  .field input, .field select{border:1px solid var(--line-paper-14); background:var(--card,#fff); background:#fff; color:var(--ink); padding:9px 11px; font-size:.9rem; font-family:var(--sans);}
+  .field input:focus, .field select:focus{outline:1px solid var(--accent-2); border-color:var(--accent-2);}
+  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:20px;}
+  .btn-cancel{background:none; border:1px solid var(--line-paper-14); color:var(--sub-on-paper); padding:9px 16px; font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer;}
+  .btn-cancel:hover{border-color:var(--accent-2); color:var(--ink);}
+  .btn-save{background:var(--ink); color:var(--paper); border:1px solid var(--ink); padding:9px 18px; font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer;}
+  .btn-save:hover{background:var(--graphite);}
+
   /* ---- print ---- */
   #printArea{display:none;}
   @media print{
@@ -181,6 +204,7 @@
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
         <span class="progress-counter" id="progressCounter"></span>
       </div>
+      <button class="btn-add" data-action="open-add">+ Pendência</button>
       <button class="btn-print" data-action="print-day">Imprimir o dia</button>
     </div>
   </div>
@@ -189,10 +213,35 @@
 <div class="shell">
   <main>
     <section class="day-panel" id="dayPanel"></section>
+    <section class="card" id="avulsasCard" style="display:none;"></section>
     <section class="card" id="upcomingCard"></section>
     <section class="card" id="backlogCard"></section>
   </main>
   <aside id="asideCol"></aside>
+</div>
+
+<div class="modal-overlay" id="addOverlay" data-action="close-add-backdrop">
+  <div class="modal-panel" id="addPanel">
+    <h3 class="modal-title">Nova pendência</h3>
+    <form id="addForm">
+      <div class="field">
+        <label for="addText">O que precisa ser feito</label>
+        <input type="text" id="addText" name="text" required maxlength="240" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="addKind">Categoria (opcional)</label>
+        <input type="text" id="addKind" name="kind" placeholder="Pendência" maxlength="24" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="addDay">Quando</label>
+        <select id="addDay" name="day"></select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" data-action="close-add">Cancelar</button>
+        <button type="submit" class="btn-save">Adicionar</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div id="printArea"></div>
@@ -202,6 +251,7 @@ import { DATA } from './cronograma-data.js';
 
 const KEY = 'cronograma-agosto-2026-agenda';
 const LEGACY_KEY = 'cronograma-agosto-2026-gustavo';
+const EXTRAS_KEY = 'cronograma-agosto-2026-extras';
 const HOJE = '2026-08-05';
 
 const PRAZOS = 'Cumprir prazos pendentes da semana';
@@ -320,15 +370,18 @@ const CRITICO = ['Audiência', 'Prazos', 'Fechar mês', 'Início do mês'];
 const MES = { '08':'agosto', '09':'setembro' };
 const WD = { seg:'segunda', ter:'terça', qua:'quarta', qui:'quinta', sex:'sexta' };
 const fmt = iso => Number(iso.slice(8)) + ' de ' + MES[iso.slice(5,7)];
+const AVULSA = 'avulsa';
 
 function esc(s){
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+function genId(){ return 'extra-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8); }
 
 // ---- state ----
-let checked = {}, astrea = {}, openClients = {}, scope = 'semana', onlyOverdue = false, sel = HOJE;
+let checked = {}, astrea = {}, extras = [], openClients = {}, scope = 'semana', onlyOverdue = false, sel = HOJE;
 try { checked = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
 try { astrea = JSON.parse(localStorage.getItem(LEGACY_KEY) || '{}'); } catch(e){}
+try { extras = JSON.parse(localStorage.getItem(EXTRAS_KEY) || '[]'); } catch(e){}
 
 function save(k, obj){ try { localStorage.setItem(k, JSON.stringify(obj)); } catch(e){} }
 
@@ -360,23 +413,42 @@ function astreaItems(){
 }
 const ASTREA_ITEMS = astreaItems();
 
+// ---- merge plan tasks + user-added pendências for a given day ----
+function mergeDayTasks(iso){
+  const planoDay = PLANO.find(d => d[0] === iso);
+  const builtins = planoDay ? planoDay[2].map((t, i) => ({
+    id: iso + '-' + i, kind: t[0], text: t[1], checked: !!checked[iso + '-' + i], custom: false
+  })) : [];
+  const ex = extras.filter(e => e.day === iso).map(e => ({
+    id: e.id, kind: e.kind || 'Pendência', text: e.text, checked: !!e.checked, custom: true
+  }));
+  return builtins.concat(ex);
+}
+function avulsasItems(){
+  return extras.filter(e => e.day === AVULSA).map(e => ({
+    id: e.id, kind: e.kind || 'Pendência', text: e.text, checked: !!e.checked, custom: true
+  }));
+}
+
 // ---- render helpers ----
-function taskRowHtml(dayId, tasks, dark, i0){
-  return tasks.map((t, i) => {
-    const id = dayId + '-' + i;
-    const ck = !!checked[id];
-    const crit = CRITICO.includes(t[0]);
-    const kindCls = dark ? 'task-kind' : 'task-kind';
-    const rowCls = dark ? 'task-row' : 'day-task-row';
-    const textCls = dark ? 'task-text' : 'task-text';
-    return `<label class="${rowCls}" data-toggle-task="${id}">
-      <input type="checkbox" ${ck ? 'checked' : ''} data-toggle-task="${id}">
+function taskItemHtml(item, dark){
+  const crit = CRITICO.includes(item.kind);
+  const rowCls = dark ? 'task-row' : 'day-task-row';
+  const toggleAttr = item.custom ? `data-toggle-extra="${item.id}"` : `data-toggle-task="${item.id}"`;
+  const delBtn = item.custom ? `<button type="button" class="task-del" data-delete-extra="${item.id}" title="Remover pendência">×</button>` : '';
+  return `<div class="${rowCls}">
+    <label ${toggleAttr}>
+      <input type="checkbox" ${item.checked ? 'checked' : ''} ${toggleAttr}>
       <span class="task-body">
-        <span class="task-kind${crit ? ' crit' : ''}">${esc(t[0])}</span>
-        <span class="${textCls}${ck ? ' done' : ''}">${esc(t[1])}</span>
+        <span class="task-kind${crit ? ' crit' : ''}">${esc(item.kind)}</span>
+        <span class="task-text${item.checked ? ' done' : ''}">${esc(item.text)}</span>
       </span>
-    </label>`;
-  }).join('');
+    </label>
+    ${delBtn}
+  </div>`;
+}
+function taskListHtml(items, dark){
+  return items.map(item => taskItemHtml(item, dark)).join('');
 }
 
 function renderDayPanel(){
@@ -386,12 +458,12 @@ function renderDayPanel(){
   const tomorrowIdx = PLANO.findIndex(d => d[0] === HOJE) + 1;
   const tomorrow = PLANO[tomorrowIdx];
   const selTag = today[0] === HOJE ? 'Hoje' : (tomorrow && today[0] === tomorrow[0] ? 'Amanhã' : 'Dia selecionado');
-  const hojeTasks = today[2].map((t, i) => ({ t, id: today[0] + '-' + i, checked: !!checked[today[0] + '-' + i] }));
+  const hojeTasks = mergeDayTasks(today[0]);
   const doneHoje = hojeTasks.filter(x => x.checked).length;
 
   const stripHtml = PLANO.map(d => {
     const on = d[0] === sel;
-    const pend = d[2].some((t, i) => !checked[d[0] + '-' + i]);
+    const pend = mergeDayTasks(d[0]).some(t => !t.checked);
     const label = d[0].slice(8) + ' ' + (d[0].slice(5,7) === '08' ? 'ago' : 'set') + ' · ' + d[1];
     const cls = ['day-chip', on ? 'on' : '', (!on && !pend) ? 'pend-off' : ''].filter(Boolean).join(' ');
     return `<button class="${cls}" data-pick-day="${d[0]}">${esc(label)}</button>`;
@@ -412,7 +484,22 @@ function renderDayPanel(){
       </div>
     </div>
     <div class="day-strip">${stripHtml}</div>
-    <div class="day-tasks">${taskRowHtml(today[0], today[2], true)}</div>
+    <div class="day-tasks">${taskListHtml(hojeTasks, true)}</div>
+  `;
+}
+
+function renderAvulsas(){
+  const items = avulsasItems();
+  const el = document.getElementById('avulsasCard');
+  if (!items.length) { el.style.display = 'none'; el.innerHTML = ''; return; }
+  const done = items.filter(i => i.checked).length;
+  el.style.display = '';
+  el.innerHTML = `
+    <div class="card-head">
+      <h2 class="card-title">Pendências avulsas</h2>
+      <span class="backlog-count">${done}/${items.length}</span>
+    </div>
+    <div class="days-list">${taskListHtml(items, false)}</div>
   `;
 }
 
@@ -429,7 +516,7 @@ function renderUpcoming(){
   const daysHtml = shown.length === 0
     ? `<div class="empty-state">Nenhum dia neste recorte</div>`
     : shown.map(d => {
-        const tasks = d[2].map((t, i) => ({ t, checked: !!checked[d[0] + '-' + i] }));
+        const tasks = mergeDayTasks(d[0]);
         const allDone = tasks.every(t => t.checked);
         const dayLabel = d[0].slice(8) + ' ' + (d[0].slice(5,7) === '08' ? 'ago' : 'set');
         return `<div class="day-row${allDone ? ' all-done' : ''}">
@@ -437,7 +524,7 @@ function renderUpcoming(){
             <div class="day-num">${esc(dayLabel)}</div>
             <div class="day-wd">${esc(d[1])}</div>
           </div>
-          <div class="day-row-tasks">${taskRowHtml(d[0], d[2], false)}</div>
+          <div class="day-row-tasks">${taskListHtml(tasks, false)}</div>
         </div>`;
       }).join('');
 
@@ -547,9 +634,19 @@ function renderTopbar(){
   document.getElementById('progressCounter').textContent = done + ' / ' + allTasks.length + ' do plano';
 }
 
+function populateAddDaySelect(){
+  const sel2 = document.getElementById('addDay');
+  const opts = PLANO.map(d => {
+    const label = d[0].slice(8) + ' ' + (d[0].slice(5,7) === '08' ? 'ago' : 'set') + ' · ' + d[1] + (d[0] === HOJE ? ' — hoje' : '');
+    return `<option value="${d[0]}">${esc(label)}</option>`;
+  }).join('');
+  sel2.innerHTML = opts + `<option value="${AVULSA}">Sem data — pendências avulsas</option>`;
+}
+
 function render(){
   renderTopbar();
   renderDayPanel();
+  renderAvulsas();
   renderUpcoming();
   renderBacklog();
   renderAside();
@@ -564,6 +661,21 @@ function toggleTask(id){
 function toggleAstrea(id){
   astrea = { ...astrea, [id]: !astrea[id] };
   save(LEGACY_KEY, astrea);
+  render();
+}
+function toggleExtra(id){
+  extras = extras.map(e => e.id === id ? { ...e, checked: !e.checked } : e);
+  save(EXTRAS_KEY, extras);
+  render();
+}
+function deleteExtra(id){
+  extras = extras.filter(e => e.id !== id);
+  save(EXTRAS_KEY, extras);
+  render();
+}
+function addExtra(text, kind, day){
+  extras = extras.concat([{ id: genId(), day, kind: kind || 'Pendência', text, checked: false }]);
+  save(EXTRAS_KEY, extras);
   render();
 }
 function pickDay(iso){ sel = iso; render(); }
@@ -589,7 +701,7 @@ function printDay(){
   const si = idx < 0 ? 0 : idx;
   const today = PLANO[si];
   const label = (WD[today[1]] || today[1]) + ', ' + today[0].slice(8) + '/' + today[0].slice(5,7) + '/2026';
-  const rows = today[2].map((t, i) => ({ kind:t[0], text:t[1], checked: !!checked[today[0] + '-' + i] }));
+  const rows = mergeDayTasks(today[0]);
   const rowsHtml = rows.map(r => `<div class="print-row">
     <span class="print-box">${r.checked ? '☑' : '☐'}</span>
     <span><span class="print-kind">${esc(r.kind)}</span>${esc(r.text)}</span>
@@ -603,27 +715,54 @@ function printDay(){
   setTimeout(() => window.print(), 120);
 }
 
+// ---- add-pendência modal ----
+function openAddModal(){
+  document.getElementById('addForm').reset();
+  document.getElementById('addDay').value = sel;
+  document.getElementById('addOverlay').classList.add('open');
+  document.getElementById('addText').focus();
+}
+function closeAddModal(){
+  document.getElementById('addOverlay').classList.remove('open');
+}
+
 // ---- event delegation ----
 document.addEventListener('click', e => {
-  const btn = e.target.closest('[data-action], [data-pick-day], [data-pick-scope], [data-toggle-client]');
+  if (e.target.id === 'addOverlay') { closeAddModal(); return; }
+  const btn = e.target.closest('[data-action], [data-pick-day], [data-pick-scope], [data-toggle-client], [data-delete-extra]');
   if (!btn) return;
   if (btn.dataset.action === 'prev-day') stepDay(-1);
   else if (btn.dataset.action === 'next-day') stepDay(1);
   else if (btn.dataset.action === 'toggle-vencidos') toggleVencidos();
   else if (btn.dataset.action === 'reset') doReset();
   else if (btn.dataset.action === 'print-day') printDay();
+  else if (btn.dataset.action === 'open-add') openAddModal();
+  else if (btn.dataset.action === 'close-add') closeAddModal();
   else if (btn.dataset.pickDay) pickDay(btn.dataset.pickDay);
   else if (btn.dataset.pickScope) pickScope(btn.dataset.pickScope);
   else if (btn.dataset.toggleClient) toggleClient(btn.dataset.toggleClient);
+  else if (btn.dataset.deleteExtra) deleteExtra(btn.dataset.deleteExtra);
 });
 document.addEventListener('change', e => {
   const input = e.target;
   if (input.dataset && input.dataset.toggleTask) toggleTask(input.dataset.toggleTask);
   else if (input.dataset && input.dataset.toggleAstrea) toggleAstrea(input.dataset.toggleAstrea);
+  else if (input.dataset && input.dataset.toggleExtra) toggleExtra(input.dataset.toggleExtra);
 });
-// checkbox click bubbles to label click too; guard against double toggle by only reacting on the input's change event,
-// and preventing the wrapping label's default double-fire via the input itself (browser handles label->input click natively).
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('addOverlay').classList.contains('open')) closeAddModal();
+});
+document.getElementById('addForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const text = document.getElementById('addText').value.trim();
+  const kind = document.getElementById('addKind').value.trim();
+  const day = document.getElementById('addDay').value;
+  if (!text) return;
+  addExtra(text, kind, day);
+  closeAddModal();
+});
 
+populateAddDaySelect();
 render();
 </script>
 </body>
