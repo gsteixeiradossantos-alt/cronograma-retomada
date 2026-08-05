@@ -131,6 +131,31 @@
   .astrea-date{font-family:var(--mono); font-size:9px; letter-spacing:.1em; white-space:nowrap; margin-left:8px; padding:2px 7px; border:1px solid var(--line-paper-14); color:var(--sub-on-paper);}
   .astrea-date.over{background:rgba(201,169,97,.28); border-color:var(--accent); color:var(--ink);}
 
+  /* ---- nested backlog / fila context inside a plan task ---- */
+  .nested-block{margin-top:8px; padding:10px 12px; border-left:2px solid var(--line-paper-14);}
+  .nested-block.dark{border-left-color:var(--line-ink-28);}
+  .nested-label{font-family:var(--mono); font-size:8px; letter-spacing:.14em; text-transform:uppercase; color:var(--sub-on-paper); margin-bottom:6px;}
+  .nested-block.dark .nested-label{color:rgba(239,234,217,.5);}
+  .nested-astrea-item{display:flex; align-items:flex-start; gap:9px; padding:5px 0; cursor:pointer;}
+  .nested-astrea-item input{margin-top:2px; width:13px; height:13px; accent-color:var(--accent-2); flex:none; cursor:pointer;}
+  .nested-astrea-item .astrea-body{font-size:.79rem;}
+  .nested-astrea-item.dark .astrea-body{color:var(--paper);}
+  .nested-astrea-item.dark .astrea-body.done{color:var(--done-on-ink);}
+  .astrea-client{font-family:var(--serif); font-size:.82rem; margin-right:5px;}
+  .nested-astrea-item.dark .astrea-client{color:var(--paper);}
+  .nested-astrea-item.dark .astrea-date{border-color:var(--line-ink-28); color:rgba(239,234,217,.55);}
+  .nested-astrea-item.dark .astrea-date.over{background:rgba(201,169,97,.28); border-color:var(--accent); color:var(--ink);}
+  .fila-inline{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .fila-inline-badge{font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-2);}
+  .nested-block.dark .fila-inline-badge{color:var(--accent);}
+  .fila-inline-casos{font-family:var(--mono); font-size:9px; color:var(--sub-on-paper);}
+  .nested-block.dark .fila-inline-casos{color:rgba(239,234,217,.55);}
+
+  /* ---- day panel: activities heading + inline add ---- */
+  .day-eyebrow{font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:rgba(239,234,217,.5); margin:4px 0 2px;}
+  .task-add-row{display:block; width:100%; text-align:left; background:none; border:none; border-top:1px dashed var(--line-ink-28); color:rgba(239,234,217,.55); padding:12px 0; font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; cursor:pointer;}
+  .task-add-row:hover{color:var(--accent);}
+
   /* ---- aside ---- */
   .aside-block{padding:18px 19px;}
   .aside-block.ink{background:var(--ink); color:var(--paper); border-top:1px solid var(--accent);}
@@ -268,23 +293,23 @@ const PLANO = [
   ]],
   ['2026-08-07', 'sex', [
     ['Semanal', ACORDOS],
-    ['Astrea', 'Triar vencidos A1–A8']
+    ['Astrea', 'Triar vencidos A1–A8', {astreaRange:[1,8]}]
   ]],
   ['2026-08-10', 'seg', [
-    ['Migrar', 'Odontomundi — importar os 202 casos ativos no COBRASQ'],
-    ['Astrea', 'Triar vencidos A9–A16']
+    ['Migrar', 'Odontomundi — importar os 202 casos ativos no COBRASQ', {filaIndex:0}],
+    ['Astrea', 'Triar vencidos A9–A16', {astreaRange:[9,16]}]
   ]],
   ['2026-08-11', 'ter', [
-    ['Migrar', 'Odontomundi — anexar comprovantes e lançar pagamentos'],
-    ['Astrea', 'Triar vencidos A17–A24']
+    ['Migrar', 'Odontomundi — anexar comprovantes e lançar pagamentos', {filaIndex:0}],
+    ['Astrea', 'Triar vencidos A17–A24', {astreaRange:[17,24]}]
   ]],
   ['2026-08-12', 'qua', [
-    ['Migrar', 'Odontomundi — etiquetar no Astrea e conferir 5 casos por amostra'],
+    ['Migrar', 'Odontomundi — etiquetar no Astrea e conferir 5 casos por amostra', {filaIndex:0}],
     ['Cadastrar', '90 contratos novos da Odontomundi']
   ]],
   ['2026-08-13', 'qui', [
     ['Prazos', PRAZOS],
-    ['Astrea', 'Triar vencidos A25–A32']
+    ['Astrea', 'Triar vencidos A25–A32', {astreaRange:[25,32]}]
   ]],
   ['2026-08-14', 'sex', [
     ['Semanal', ACORDOS],
@@ -292,15 +317,15 @@ const PLANO = [
   ]],
   ['2026-08-17', 'seg', [
     ['Audiência', 'Proc. 0006715-57 — Juliana Skorek Bruch e Nilsa Celi Zeni'],
-    ['Migrar', 'Leofer Metalúrgica — importar os 106 casos']
+    ['Migrar', 'Leofer Metalúrgica — importar os 106 casos', {filaIndex:1}]
   ]],
   ['2026-08-18', 'ter', [
-    ['Migrar', 'Leofer — comprovantes, pagamentos, etiquetas e amostra'],
-    ['Astrea', 'Triar vencidos A33–A40']
+    ['Migrar', 'Leofer — comprovantes, pagamentos, etiquetas e amostra', {filaIndex:1}],
+    ['Astrea', 'Triar vencidos A33–A40', {astreaRange:[33,40]}]
   ]],
   ['2026-08-19', 'qua', [
-    ['Migrar', 'SOS Animal — 93 casos, ciclo completo'],
-    ['Astrea', 'Triar vencidos A41–A48']
+    ['Migrar', 'SOS Animal — 93 casos, ciclo completo', {filaIndex:2}],
+    ['Astrea', 'Triar vencidos A41–A48', {astreaRange:[41,48]}]
   ]],
   ['2026-08-20', 'qui', [
     ['Audiência', 'Proc. 0006255-36 — Jean Carlos Vialeto'],
@@ -311,16 +336,16 @@ const PLANO = [
     ['Pastas', 'Apontar pastas: Claudiomar Kubiak, Mercado Livre, Jaime (INSS), IRPF Carlinhos']
   ]],
   ['2026-08-24', 'seg', [
-    ['Migrar', 'COBRASQ casos próprios — 57 casos'],
-    ['Astrea', 'Triar vencidos A49–A56']
+    ['Migrar', 'COBRASQ casos próprios — 57 casos', {filaIndex:3}],
+    ['Astrea', 'Triar vencidos A49–A56', {astreaRange:[49,56]}]
   ]],
   ['2026-08-25', 'ter', [
-    ['Migrar', 'Arte Estofados — Laranjeiras do Sul + Dois Vizinhos, 97 casos em bloco'],
-    ['Astrea', 'Triar vencidos A57–A64']
+    ['Migrar', 'Arte Estofados — Laranjeiras do Sul + Dois Vizinhos, 97 casos em bloco', {filaIndex:4}],
+    ['Astrea', 'Triar vencidos A57–A64', {astreaRange:[57,64]}]
   ]],
   ['2026-08-26', 'qua', [
     ['WhatsApp', 'Triar: Elaine Baranoski, Mecânica Moreira, Marcielle Hauschilat, Dra. Ana'],
-    ['Astrea', 'Triar vencidos A65–A68 — fecha os 68 vencidos']
+    ['Astrea', 'Triar vencidos A65–A68 — fecha os 68 vencidos', {astreaRange:[65,68]}]
   ]],
   ['2026-08-27', 'qui', [
     ['Prazos', PRAZOS],
@@ -328,10 +353,10 @@ const PLANO = [
   ]],
   ['2026-08-28', 'sex', [
     ['Semanal', ACORDOS],
-    ['Migrar', 'Saúde Farma, Vetclin e Injetcar — 67 casos']
+    ['Migrar', 'Saúde Farma, Vetclin e Injetcar — 67 casos', {filaIndex:5}]
   ]],
   ['2026-08-31', 'seg', [
-    ['Migrar', 'Machadinho Auto Center + Ame Sorrisos — 41 casos'],
+    ['Migrar', 'Machadinho Auto Center + Ame Sorrisos — 41 casos', {filaIndex:6}],
     ['Fechar mês', 'O que sobrou entra no cronograma de setembro']
   ]],
   ['2026-09-01', 'ter', [
@@ -414,13 +439,21 @@ function astreaItems(){
 const ASTREA_ITEMS = astreaItems();
 
 // ---- merge plan tasks + user-added pendências for a given day ----
+function astreaByRange(range){
+  if (!range) return [];
+  const [start, end] = range;
+  return ASTREA_ITEMS.filter(i => {
+    const n = parseInt((i.num || '').replace(/\D/g, ''), 10);
+    return i.num && i.num[0] === 'A' && n >= start && n <= end;
+  });
+}
 function mergeDayTasks(iso){
   const planoDay = PLANO.find(d => d[0] === iso);
   const builtins = planoDay ? planoDay[2].map((t, i) => ({
-    id: iso + '-' + i, kind: t[0], text: t[1], checked: !!checked[iso + '-' + i], custom: false
+    id: iso + '-' + i, kind: t[0], text: t[1], checked: !!checked[iso + '-' + i], custom: false, meta: t[2] || null
   })) : [];
   const ex = extras.filter(e => e.day === iso).map(e => ({
-    id: e.id, kind: e.kind || 'Pendência', text: e.text, checked: !!e.checked, custom: true
+    id: e.id, kind: e.kind || 'Pendência', text: e.text, checked: !!e.checked, custom: true, meta: null
   }));
   return builtins.concat(ex);
 }
@@ -431,17 +464,54 @@ function avulsasItems(){
 }
 
 // ---- render helpers ----
+function nestedAstreaHtml(range, dark){
+  const list = astreaByRange(range);
+  if (!list.length) return '';
+  const rows = list.map(i => {
+    const ck = !!astrea[i.id];
+    const over = i.days !== null && i.days < 0;
+    const dateLabel = i.dateRaw ? (over ? i.dateRaw + ' · vencido há ' + Math.abs(i.days) + 'd' : i.dateRaw) : '';
+    return `<label class="nested-astrea-item${dark ? ' dark' : ''}" data-toggle-astrea="${i.id}">
+      <input type="checkbox" ${ck ? 'checked' : ''} data-toggle-astrea="${i.id}">
+      <span class="task-body">
+        <span class="astrea-num">${esc(i.num)}</span>
+        <span class="astrea-client">${esc(i.client)}</span>
+        <span class="astrea-body${ck ? ' done' : ''}">${esc(i.body)}</span>
+        ${dateLabel ? `<span class="astrea-date${over ? ' over' : ''}">${esc(dateLabel)}</span>` : ''}
+      </span>
+    </label>`;
+  }).join('');
+  const done = list.filter(i => astrea[i.id]).length;
+  return `<div class="nested-block${dark ? ' dark' : ''}">
+    <div class="nested-label">Backlog do Astrea · ${done}/${list.length}</div>
+    ${rows}
+  </div>`;
+}
+function filaInlineHtml(filaIndex, dark){
+  const f = FILA[filaIndex];
+  if (!f) return '';
+  return `<div class="nested-block${dark ? ' dark' : ''}">
+    <div class="fila-inline">
+      <span class="fila-inline-badge">Fila de migração · posição ${esc(f.n)} de ${FILA.length}</span>
+      <span class="fila-inline-casos">${esc(f.casos)} casos</span>
+    </div>
+  </div>`;
+}
 function taskItemHtml(item, dark){
   const crit = CRITICO.includes(item.kind);
   const rowCls = dark ? 'task-row' : 'day-task-row';
   const toggleAttr = item.custom ? `data-toggle-extra="${item.id}"` : `data-toggle-task="${item.id}"`;
   const delBtn = item.custom ? `<button type="button" class="task-del" data-delete-extra="${item.id}" title="Remover pendência">×</button>` : '';
+  let extra = '';
+  if (item.meta && item.meta.astreaRange) extra = nestedAstreaHtml(item.meta.astreaRange, dark);
+  else if (item.meta && item.meta.filaIndex !== undefined) extra = filaInlineHtml(item.meta.filaIndex, dark);
   return `<div class="${rowCls}">
     <label ${toggleAttr}>
       <input type="checkbox" ${item.checked ? 'checked' : ''} ${toggleAttr}>
       <span class="task-body">
         <span class="task-kind${crit ? ' crit' : ''}">${esc(item.kind)}</span>
         <span class="task-text${item.checked ? ' done' : ''}">${esc(item.text)}</span>
+        ${extra}
       </span>
     </label>
     ${delBtn}
@@ -484,7 +554,9 @@ function renderDayPanel(){
       </div>
     </div>
     <div class="day-strip">${stripHtml}</div>
+    <div class="day-eyebrow">Minhas atividades ${selTag === 'Hoje' ? 'de hoje' : ''}</div>
     <div class="day-tasks">${taskListHtml(hojeTasks, true)}</div>
+    <button type="button" class="task-add-row" data-action="open-add">+ Incluir pendência neste dia</button>
   `;
 }
 
