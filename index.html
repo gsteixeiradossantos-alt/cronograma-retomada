@@ -184,6 +184,25 @@
   .btn-reset{background:none; border:1px solid var(--line-paper-14); color:var(--sub-on-paper); padding:6px 12px; font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; cursor:pointer;}
   .btn-reset:hover{border-color:var(--accent-2); color:var(--ink);}
 
+  /* ---- ver por cliente ---- */
+  .client-picker-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:4px;}
+  #clientPicker{flex:1; min-width:220px; border:1px solid var(--line-paper-14); background:#fff; color:var(--ink); padding:9px 11px; font-size:.85rem; font-family:var(--sans);}
+  .client-dossie{margin-top:18px; padding-top:16px; border-top:1px solid var(--line-paper-14);}
+  .client-dossie-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:10px;}
+  .client-dossie-name{font-family:var(--serif); font-weight:400; font-size:1.2rem; margin:0; letter-spacing:-.01em;}
+  .client-audiencia{margin:10px 0; padding:12px 14px; background:rgba(201,169,97,.14); border:1px solid rgba(201,169,97,.4); border-left:3px solid var(--accent);}
+  .client-audiencia-day{font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-2);}
+  .client-audiencia-who{font-family:var(--serif); font-size:1rem; margin-top:4px;}
+  .client-audiencia-where{font-size:.82rem; color:var(--sub-on-paper); margin-top:3px;}
+  .client-mentions{margin:10px 0;}
+  .client-mention-row{display:flex; align-items:baseline; gap:10px; padding:5px 0; border-top:1px solid var(--line-paper-06);}
+  .client-mention-day{font-family:var(--mono); font-size:9px; color:var(--sub-on-paper); flex:none; width:38px;}
+  .mention-kind{font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--label-on-paper); flex:none;}
+  .mention-kind.crit{color:var(--ink);}
+  .client-mention-text{font-size:.85rem; color:var(--ink); flex:1; min-width:0;}
+  .client-astrea-list{margin-top:6px;}
+  .client-empty{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--sub-on-doc); padding:14px 0;}
+
   /* ---- modal (nova pendência) ---- */
   .modal-overlay{position:fixed; inset:0; background:rgba(10,21,48,.5); display:none; align-items:flex-start; justify-content:center; padding:10vh 20px; z-index:100;}
   .modal-overlay.open{display:flex;}
@@ -239,6 +258,7 @@
   <main>
     <section class="day-panel" id="dayPanel"></section>
     <section class="card" id="avulsasCard" style="display:none;"></section>
+    <section class="card" id="clientCard"></section>
     <section class="card" id="upcomingCard"></section>
     <section class="card" id="backlogCard"></section>
   </main>
@@ -386,6 +406,15 @@ const FILA = [
   { n:'7', name:'Machadinho · Ame Sorrisos', casos:'41' },
   { n:'8', name:'~110 clientes pequenos, em lote', casos:'414' }
 ];
+const FILA_MATCH = {
+  0: ['Odontomundi'],
+  1: ['Leofer Metalúrgica e Outras'],
+  2: ['SOS Animal'],
+  3: ['COBRASQ Recuperadora de Crédito'],
+  4: ['Arte Estofados - Laranjeiras do Sul', 'Arte Estofados - Dois Vizinhos'],
+  5: ['Saúde Farma', 'Vetclin', 'Injetcar'],
+  6: ['Machadinho Auto Center', 'Clínica Odontológica Ame Sorrisos']
+};
 const ALARMES = [
   { text:'Réu não citado a menos de 5 dias úteis da audiência → pedir redesignação no mesmo dia.' },
   { text:'Prazo do EPROC/TRT9 vencendo em ≤10 dias → para a migração e resolve o prazo.' },
@@ -403,7 +432,7 @@ function esc(s){
 function genId(){ return 'extra-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8); }
 
 // ---- state ----
-let checked = {}, astrea = {}, extras = [], openClients = {}, scope = 'semana', onlyOverdue = false, sel = HOJE;
+let checked = {}, astrea = {}, extras = [], openClients = {}, scope = 'semana', onlyOverdue = false, sel = HOJE, selectedClient = null;
 try { checked = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){}
 try { astrea = JSON.parse(localStorage.getItem(LEGACY_KEY) || '{}'); } catch(e){}
 try { extras = JSON.parse(localStorage.getItem(EXTRAS_KEY) || '[]'); } catch(e){}
@@ -437,6 +466,31 @@ function astreaItems(){
   return out;
 }
 const ASTREA_ITEMS = astreaItems();
+
+// ---- "ver por cliente": junta backlog, fila, audiência e menções no plano de um único credor/cliente ----
+function clientDirectory(){
+  const byClient = {};
+  ASTREA_ITEMS.forEach(i => { (byClient[i.client] = byClient[i.client] || []).push(i); });
+  return Object.keys(byClient).sort((a, b) => byClient[b].length - byClient[a].length).map(name => ({ name, items: byClient[name] }));
+}
+const CLIENT_DIRECTORY = clientDirectory();
+
+function clientFilaMatch(name){
+  const idx = Object.keys(FILA_MATCH).find(k => FILA_MATCH[k].includes(name));
+  return idx !== undefined ? Number(idx) : null;
+}
+function clientPlanMentions(name){
+  if (name === 'Sem cliente vinculado') return [];
+  const needle = name.toLowerCase();
+  const out = [];
+  PLANO.forEach(d => d[2].forEach(t => {
+    if (t[1].toLowerCase().includes(needle)) out.push({ iso: d[0], kind: t[0], text: t[1] });
+  }));
+  return out;
+}
+function clientAudiencia(name){
+  return AUDIENCIAS.find(a => a.who === name) || null;
+}
 
 // ---- merge plan tasks + user-added pendências for a given day ----
 function astreaByRange(range){
@@ -658,6 +712,117 @@ function renderBacklog(){
   `;
 }
 
+function clientDossieHtml(name){
+  const items = ASTREA_ITEMS.filter(i => i.client === name);
+  const done = items.filter(i => astrea[i.id]).length;
+  const overdue = items.filter(i => i.days !== null && i.days < 0 && !astrea[i.id]).length;
+  const aud = clientAudiencia(name);
+  const filaIdx = clientFilaMatch(name);
+  const mentions = clientPlanMentions(name);
+
+  const audHtml = aud ? `<div class="client-audiencia">
+    <div class="client-audiencia-day">Audiência · ${esc(aud.day)}</div>
+    <div class="client-audiencia-who">${esc(aud.who)}</div>
+    <div class="client-audiencia-where">${esc(aud.where)}</div>
+  </div>` : '';
+
+  const filaHtml = filaIdx !== null ? `<div class="nested-block">
+    <div class="fila-inline">
+      <span class="fila-inline-badge">Fila de migração · posição ${esc(FILA[filaIdx].n)} de ${FILA.length}</span>
+      <span class="fila-inline-casos">${esc(FILA[filaIdx].casos)} casos no grupo</span>
+    </div>
+  </div>` : '';
+
+  const mentionsHtml = mentions.length ? `<div class="client-mentions">
+    <div class="nested-label">No plano de 30 dias</div>
+    ${mentions.map(m => {
+      const crit = CRITICO.includes(m.kind);
+      return `<div class="client-mention-row">
+        <span class="client-mention-day">${esc(m.iso.slice(8))}/${esc(m.iso.slice(5,7))}</span>
+        <span class="mention-kind${crit ? ' crit' : ''}">${esc(m.kind)}</span>
+        <span class="client-mention-text">${esc(m.text)}</span>
+      </div>`;
+    }).join('')}
+  </div>` : '';
+
+  const itemsHtml = items.map(i => {
+    const ck = !!astrea[i.id];
+    const over = i.days !== null && i.days < 0;
+    const dateLabel = i.dateRaw ? (over ? i.dateRaw + ' · vencido há ' + Math.abs(i.days) + 'd' : i.dateRaw) : '';
+    return `<label class="astrea-item" data-toggle-astrea="${i.id}">
+      <input type="checkbox" ${ck ? 'checked' : ''} data-toggle-astrea="${i.id}">
+      <span class="task-body">
+        <span class="astrea-num">${esc(i.num)}</span>
+        <span class="astrea-body${ck ? ' done' : ''}">${esc(i.body)}</span>
+        ${dateLabel ? `<span class="astrea-date${over ? ' over' : ''}">${esc(dateLabel)}</span>` : ''}
+      </span>
+    </label>`;
+  }).join('');
+
+  return `<div class="client-dossie">
+    <div class="client-dossie-head">
+      <h3 class="client-dossie-name">${esc(name)}</h3>
+      <span class="backlog-count">${done}/${items.length}${overdue ? ' · ' + overdue + ' vencido(s)' : ''}</span>
+    </div>
+    ${audHtml}
+    ${filaHtml}
+    ${mentionsHtml}
+    <div class="client-astrea-list">${items.length ? itemsHtml : '<div class="client-empty">Sem pendências no backlog do Astrea</div>'}</div>
+  </div>`;
+}
+
+function audienciaOnlyDossieHtml(who){
+  const aud = AUDIENCIAS.find(a => a.who === who);
+  if (!aud) return '';
+  return `<div class="client-dossie">
+    <div class="client-dossie-head"><h3 class="client-dossie-name">${esc(who)}</h3></div>
+    <div class="client-audiencia">
+      <div class="client-audiencia-day">Audiência · ${esc(aud.day)}</div>
+      <div class="client-audiencia-where">${esc(aud.where)}</div>
+    </div>
+    <div class="client-empty">Sem itens de backlog do Astrea vinculados a este nome — é parte (devedor), não credor/cliente.</div>
+  </div>`;
+}
+
+function renderClientView(){
+  const el = document.getElementById('clientCard');
+  const optionsAstrea = CLIENT_DIRECTORY.map(c => {
+    const overdue = c.items.filter(i => i.days !== null && i.days < 0 && !astrea[i.id]).length;
+    const done = c.items.filter(i => astrea[i.id]).length;
+    const val = 'astrea:' + c.name;
+    const label = `${c.name} — ${done}/${c.items.length}${overdue ? ' · ' + overdue + ' venc.' : ''}`;
+    return `<option value="${esc(val)}"${selectedClient === val ? ' selected' : ''}>${esc(label)}</option>`;
+  }).join('');
+  const optionsAud = AUDIENCIAS.map(a => {
+    const val = 'aud:' + a.who;
+    return `<option value="${esc(val)}"${selectedClient === val ? ' selected' : ''}>${esc(a.who)} — ${esc(a.day)}</option>`;
+  }).join('');
+
+  let detailHtml = '';
+  if (selectedClient) {
+    const sep = selectedClient.indexOf(':');
+    const kind = selectedClient.slice(0, sep);
+    const name = selectedClient.slice(sep + 1);
+    if (kind === 'astrea') detailHtml = clientDossieHtml(name);
+    else if (kind === 'aud') detailHtml = audienciaOnlyDossieHtml(name);
+  }
+
+  el.innerHTML = `
+    <div class="card-head">
+      <h2 class="card-title">Ver por cliente</h2>
+    </div>
+    <div class="client-picker-row">
+      <select id="clientPicker">
+        <option value="">— Selecionar credor/cliente ou audiência —</option>
+        <optgroup label="Clientes (backlog do Astrea)">${optionsAstrea}</optgroup>
+        <optgroup label="Audiências">${optionsAud}</optgroup>
+      </select>
+      <button type="button" class="chip" data-action="next-pending-client">› Próximo pendente</button>
+    </div>
+    ${detailHtml}
+  `;
+}
+
 function renderAside(){
   const rotinaHtml = ROTINA.map(r => `<div><div class="rotina-when">${esc(r.when)}</div><div class="rotina-what">${esc(r.what)}</div></div>`).join('');
   const audHtml = AUDIENCIAS.map(a => `<div class="audiencia-row">
@@ -719,6 +884,7 @@ function render(){
   renderTopbar();
   renderDayPanel();
   renderAvulsas();
+  renderClientView();
   renderUpcoming();
   renderBacklog();
   renderAside();
@@ -761,6 +927,26 @@ function stepDay(delta){
 function pickScope(k){ scope = k; render(); }
 function toggleVencidos(){ onlyOverdue = !onlyOverdue; render(); }
 function toggleClient(name){ openClients = { ...openClients, [name]: !openClients[name] }; render(); }
+function pickClient(val){ selectedClient = val || null; render(); }
+function nextPendingClient(){
+  const list = CLIENT_DIRECTORY;
+  if (!list.length) return;
+  let startIdx = 0;
+  if (selectedClient && selectedClient.indexOf('astrea:') === 0) {
+    const curName = selectedClient.slice(7);
+    const curIdx = list.findIndex(c => c.name === curName);
+    startIdx = curIdx >= 0 ? curIdx + 1 : 0;
+  }
+  for (let k = 0; k < list.length; k++) {
+    const idx = (startIdx + k) % list.length;
+    const c = list[idx];
+    const done = c.items.filter(i => astrea[i.id]).length;
+    if (done < c.items.length) { selectedClient = 'astrea:' + c.name; render(); return; }
+  }
+  selectedClient = null;
+  render();
+  alert('Todos os clientes do backlog do Astrea estão zerados.');
+}
 function doReset(){
   if (confirm('Resetar o plano de 30 dias?')) {
     checked = {};
@@ -810,6 +996,7 @@ document.addEventListener('click', e => {
   else if (btn.dataset.action === 'print-day') printDay();
   else if (btn.dataset.action === 'open-add') openAddModal();
   else if (btn.dataset.action === 'close-add') closeAddModal();
+  else if (btn.dataset.action === 'next-pending-client') nextPendingClient();
   else if (btn.dataset.pickDay) pickDay(btn.dataset.pickDay);
   else if (btn.dataset.pickScope) pickScope(btn.dataset.pickScope);
   else if (btn.dataset.toggleClient) toggleClient(btn.dataset.toggleClient);
@@ -817,6 +1004,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('change', e => {
   const input = e.target;
+  if (input.id === 'clientPicker') { pickClient(input.value); return; }
   if (input.dataset && input.dataset.toggleTask) toggleTask(input.dataset.toggleTask);
   else if (input.dataset && input.dataset.toggleAstrea) toggleAstrea(input.dataset.toggleAstrea);
   else if (input.dataset && input.dataset.toggleExtra) toggleExtra(input.dataset.toggleExtra);
