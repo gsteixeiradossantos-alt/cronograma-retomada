@@ -318,15 +318,21 @@ const PLANO = [
     ['Cadastrar', 'Atualizar cadastro no site COBRASQ'],
     ['Prazos', 'Gerar guia e pagar custas 0004937-06.2025.8.16.0083 — R$46,19 (R$30 expedição + R$16,19 postais, mov.114.1) — ciência já protocolada, vincular guia no PROJUDI'],
     ['Prazos', 'Gerar guia e pagar custas 0005728-38.2026.8.16.0083 — R$138,63 (R$30 mandado + R$108,63 oficial, mov.21.1) — ciência já protocolada, vincular guia no PROJUDI'],
-    ['Prazos', 'Gerar guia e pagar custas 0005844-44.2026.8.16.0083 — URGENTE sob pena de extinção, valor a calcular na guia TJPR (custas da Serventia, mov.16.1/18.1) — ciência já protocolada, vincular guia no PROJUDI']
+    ['Prazos', 'Gerar guia e pagar custas 0005844-44.2026.8.16.0083 — URGENTE sob pena de extinção, valor a calcular na guia TJPR (custas da Serventia, mov.16.1/18.1) — ciência já protocolada, vincular guia no PROJUDI'],
+    ['Prazos', 'URGENTE — Proc. 0004987-54.2019.8.16.0079 (JEC Dois Vizinhos): embargos de declaração REJEITADOS em 01/08/2026 (mov. 195.1) — a sentença de extinção da execução (art. 53 §4º Lei 9.099/95) foi mantida. Intimação da rejeição expedida em 03/08/2026 (mov. 196.0), prazo de 10 dias úteis para recurso inominado, AGUARDANDO LEITURA. Verificar HOJE no PROJUDI a data real de leitura para travar o prazo — a decisão que rejeitou os embargos nunca enfrentou a omissão apontada sobre o Enunciado 75 FONAJE / falta de certidão de crédito, ponto para o recurso. Recurso é FORA do escopo do lote de hoje — precisa de sessão dedicada.'],
+    ['Prazos', 'Levantar os 2 processos do TJSC (pasta "EPROTC TJSC"): 5001600-02.2026.8.24.0103 e 5004743-10.2026.8.24.0067 — ainda não diagnosticados, sistema eproc (diferente do padrão PROJUDI/TJPR do lote de hoje)']
   ]],
   ['2026-08-10', 'seg', [
     ['Migrar', 'Odontomundi — importar os 202 casos ativos no COBRASQ', {filaIndex:0}],
-    ['Astrea', 'Triar vencidos A9–A16', {astreaRange:[9,16]}]
+    ['Astrea', 'Triar vencidos A9–A16', {astreaRange:[9,16]}],
+    ['Prazos', 'Proc. 0002025-36.2025.8.16.0083 — pagar guia de custas do Renajud (Sisbajud já veio infrutífero em 07/08, autorizando a sequência), 5 dias úteis da intimação de 07/08/2026 (mov.115/116) — conferir prazo real no PROJUDI'],
+    ['Prazos', 'Proc. 0006329-44.2026.8.16.0083 — pagar guia de R$185,59 (mov.12, Custas Finais/FUNJUS) e monitorar decisão sobre parcelamento das custas da Escrivania (R$497,00 em 4x, autos conclusos desde 03/08) — se negada, agir rápido: risco de cancelamento retroativo da distribuição (prazo original de 15 dias, mov.8.1)']
   ]],
   ['2026-08-11', 'ter', [
     ['Migrar', 'Odontomundi — anexar comprovantes e lançar pagamentos', {filaIndex:0}],
-    ['Astrea', 'Triar vencidos A17–A24', {astreaRange:[17,24]}]
+    ['Astrea', 'Triar vencidos A17–A24', {astreaRange:[17,24]}],
+    ['Prazos', 'Proc. 0003849-76.2024.8.16.0079 — verificar no PROJUDI se a 2ª rodada Sisbajud (ordenada de ofício em 17/04) já retornou; se negativa, conferir se já avançou para Renajud (já requerido pela COBRASQ em 13/04, mov.52.1)'],
+    ['Prazos', 'Proc. 0008139-41.2025.8.16.0131 — verificar se a executada Ana Paula Lanzarin Bés juntou os comprovantes de pagamento facultados na decisão de 04/08; se sim, avaliar manifestação da COBRASQ antes do julgamento da exceção de pré-executividade']
   ]],
   ['2026-08-12', 'qua', [
     ['Migrar', 'Odontomundi — etiquetar no Astrea e conferir 5 casos por amostra', {filaIndex:0}],
@@ -354,7 +360,8 @@ const PLANO = [
   ]],
   ['2026-08-20', 'qui', [
     ['Audiência', 'Proc. 0006255-36 — Jean Carlos Vialeto'],
-    ['Prazos', PRAZOS]
+    ['Prazos', PRAZOS],
+    ['Prazos', 'Proc. 0004987-54.2019.8.16.0079 — SEGUNDA CONFERÊNCIA: se ainda não tratado, o prazo de 10 dias úteis do recurso inominado (ver lembrete de 07/08) pode estar perto do vencimento — confirmar data-limite exata e não deixar passar.']
   ]],
   ['2026-08-21', 'sex', [
     ['Semanal', ACORDOS],
